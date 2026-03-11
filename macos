@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+OS="$(uname -s)"
+
+if [[ "$OS" == "Darwin" ]]; then
+  APPDATA_PATH="$HOME/Library/Preferences"
+else
+  echo "[macos] This script is not intended to be used on os $OS"
+  exit 1
+fi
+
+DOCKER_VOLUME="trm_state"
+DOCKER_INIT="$PWD/init"
+USER_ARGS=()
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --docker-volume)
+      DOCKER_VOLUME="$2"
+      shift 2
+      ;;
+    --docker-init)
+      if [[ "$2" = /* ]]; then
+        DOCKER_INIT="$2"
+      else
+        DOCKER_INIT="$PWD/$2"
+      fi
+      shift 2
+      ;;
+    *)
+      USER_ARGS+=("$1")
+      shift
+      ;;
+  esac
+done
+
+BASE_ARGS=(
+  run --rm -it
+  --platform linux/amd64
+  -v "${DOCKER_VOLUME}:/var/lib/trm"
+  -v "$APPDATA_PATH:/appdata"
+  -e APPDATA=/appdata
+)
+
+volume_exists() {
+  docker volume inspect "$DOCKER_VOLUME" >/dev/null 2>&1
+}
+
+create_with_init() {
+  echo "[macos] Creating volume $DOCKER_VOLUME"
+  docker volume create "$DOCKER_VOLUME" >/dev/null
+  ARGS=(
+    "${BASE_ARGS[@]}"
+    -v "$DOCKER_INIT:/installdata:ro"
+    -e INSTALLDATA=/installdata
+    abaptrm/docker trm
+  )
+}
+
+if [[ "${#USER_ARGS[@]}" -gt 0 ]]; then
+  ARGS=("${BASE_ARGS[@]}" abaptrm/docker trm "${USER_ARGS[@]}")
+else
+  if volume_exists; then
+    read -r -p "[macos] Volume '$DOCKER_VOLUME' already exists. Do you want to delete and recreate it? [y/N] " REPLY
+    if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+      echo "[macos] Deleting volume $DOCKER_VOLUME"
+      docker volume rm "$DOCKER_VOLUME" >/dev/null
+      create_with_init
+    else
+      ARGS=("${BASE_ARGS[@]}" abaptrm/docker trm)
+    fi
+  else
+    create_with_init
+  fi
+fi
+
+docker "${ARGS[@]}"
