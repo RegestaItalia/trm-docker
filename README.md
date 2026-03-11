@@ -72,8 +72,8 @@ This script is a small utility used to run TRM inside Docker. After installing t
 
 1. Go to the [trm-docker repository](https://github.com/RegestaItalia/trm-docker)
 2. Download the script corresponding to your operating system:
-   - **Windows**: download `win.cmd` and rename it to `trm.cmd`
-   - **macOS / Linux**: download `macos`, rename it to `trm`, and make it executable:
+   - **Windows**: download [win.cmd](https://raw.githubusercontent.com/RegestaItalia/trm-docker/refs/heads/main/win.cmd) and rename it to `trm.cmd`
+   - **macOS / Linux**: download [macos](https://raw.githubusercontent.com/RegestaItalia/trm-docker/refs/heads/main/macos), rename it to `trm`, and make it executable:
      ```bash
      chmod +x trm
      ```
