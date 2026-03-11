@@ -24,6 +24,7 @@ Here's a list of all TRM Github repositories:
 - [trm-registry-types](https://github.com/RegestaItalia/trm-registry-types): For issues regarding the core - server request/response objects
 - [trm-action-publish](https://github.com/RegestaItalia/trm-action-publish): For issues regarding the Github action "Publish"
 - [trm-action-install](https://github.com/RegestaItalia/trm-action-install): For issues regarding the Github action "Install"
+- [trm-docker](https://github.com/RegestaItalia/trm-docker): For issues regarding TRM dockerized
 - [trm-ui](https://github.com/RegestaItalia/trm-ui): For issues regarding the UI
 
 ## I Have a Question
