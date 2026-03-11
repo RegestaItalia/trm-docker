@@ -14,6 +14,8 @@
 | Regesta S.p.A.                                  | [https://www.regestaitalia.eu/](https://www.regestaitalia.eu/) |
 | Clarex S.r.l.                                   | [https://www.clarex.it/](https://www.clarex.it/)               |
 
+[trm-docker](https://hub.docker.com/r/abaptrm/docker) is the dockerized version of TRM.
+
 🚚 **TRM (Transport Request Manager)** is a package manager inspired solution built leveraging CTS that simplifies SAP ABAP transports.
 
 <p align="center">
@@ -58,6 +60,12 @@ Each package includes a `manifest.json` that declares:
 
 ---
 
+# Documentation
+
+Full documentation can be seen at [https://docs.trmregistry.com/](https://docs.trmregistry.com).
+
+---
+
 # Why Docker?
 
 Installing **trm** can be, especially on MacOS, challenging, as several steps are required to properly prepare the client environment.
@@ -65,6 +73,8 @@ Installing **trm** can be, especially on MacOS, challenging, as several steps ar
 To improve usability, the entire project (**excluding SAP SDKs and tools**) has been containerized using Docker.
 
 ---
+
+<!-- START OF SETUP.MD -->
 
 # Download Docker Run Script
 
@@ -186,6 +196,8 @@ trm
 
 from any directory.
 
+<!-- END OF SETUP.MD -->
+
 ---
 
 # Docker development
@@ -195,10 +207,6 @@ To build the docker image run:
 ```bash
 docker build --platform linux/amd64 -t abaptrm/docker .
 ```
-
-# Documentation
-
-Full documentation can be seen at [https://docs.trmregistry.com/](https://docs.trmregistry.com).
 
 # Contributing
 
