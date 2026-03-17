@@ -11,7 +11,9 @@ else
 fi
 
 DOCKER_VOLUME="trm_state"
-DOCKER_INIT="$PWD/init"
+HOST_CWD="$(pwd)"
+DOCKER_INIT="$HOST_CWD/init"
+
 USER_ARGS=()
 
 while [[ $# -gt 0 ]]; do
@@ -24,7 +26,7 @@ while [[ $# -gt 0 ]]; do
       if [[ "$2" = /* ]]; then
         DOCKER_INIT="$2"
       else
-        DOCKER_INIT="$PWD/$2"
+        DOCKER_INIT="$HOST_CWD/$2"
       fi
       shift 2
       ;;
@@ -40,6 +42,8 @@ BASE_ARGS=(
   --platform linux/amd64
   -v "${DOCKER_VOLUME}:/var/lib/trm"
   -v "$APPDATA_PATH:/appdata"
+  -v "$HOST_CWD:/work"
+  -w /work
   -e APPDATA=/appdata
 )
 
@@ -50,6 +54,7 @@ volume_exists() {
 create_with_init() {
   echo "[macos] Creating volume $DOCKER_VOLUME"
   docker volume create "$DOCKER_VOLUME" >/dev/null
+
   ARGS=(
     "${BASE_ARGS[@]}"
     -v "$DOCKER_INIT:/installdata:ro"
