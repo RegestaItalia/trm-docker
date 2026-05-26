@@ -1,3 +1,17 @@
+# Deprecation Notice (May 2026)
+
+With the introduction of optional support for both the SAP NetWeaver RFC SDK and the SAP R3trans program during installation, [trm-client](https://github.com/RegestaItalia/trm-client) no longer requires the legacy challenging setup in order to operate.
+
+As of May 2026, the approach based on Docker image is considered **deprecated**.
+
+## What Changed
+
+The recommended installation method is now:
+
+```bash
+npm install -g trm-client
+```
+
 # <a href="https://docs.trmregistry.com/#/server/README"><img src="https://docs.trmregistry.com/logo.png" height="40" alt="TRM"></a>
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-1.3.0-4baaaa.svg)](code_of_conduct.md)
